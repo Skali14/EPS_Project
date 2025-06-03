@@ -1,7 +1,7 @@
 import gi
 gi.require_version('Gst', '1.0')
 gi.require_version('GstApp', '1.0')
-from gi.repository import Gst
+from gi.repository import Gst, GstApp, GLib
 import pygame
 import paho.mqtt.client as mqtt
 from paho.mqtt.client import CallbackAPIVersion
@@ -14,7 +14,7 @@ import time
 VIDEO_PORT = 5000
 VIDEO_WIDTH = 320
 VIDEO_HEIGHT = 240
-MQTT_BROKER_IP = "192.168.230.33"
+MQTT_BROKER_IP = "192.168.176.33"
 MQTT_PORT = 1883
 MQTT_TOPIC_TEMP = "sensors/sens_temp"
 MQTT_TOPIC_HUMID = "sensors/sens_humid"
@@ -24,12 +24,10 @@ MQTT_TOPIC_DIST = "sensors/sens_range"
 # Pygame Setup
 os.environ['SDL_FBDEV'] = '/dev/fb1'
 pygame.init()
-pygame.mouse.set_visible(False)
 screen = pygame.display.set_mode((VIDEO_WIDTH, VIDEO_HEIGHT), 0, 0)
 font = pygame.font.Font(None, 28)
 small_font = pygame.font.Font(None, 20)
 
-# Sensor data initialization
 sensor_data = {
     "temperature": "N/A",
     "humidity": "N/A",
@@ -39,14 +37,14 @@ sensor_data = {
 data_lock = threading.Lock()
 
 # MQTT Client Setup
-def on_connect(client, rc):
+def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("MQTT: Connected to Broker!")
         client.subscribe([(MQTT_TOPIC_TEMP, 0), (MQTT_TOPIC_PHOTO, 0), (MQTT_TOPIC_HUMID, 0), (MQTT_TOPIC_DIST, 0)])
     else:
         print(f"MQTT: Failed to connect, return code {rc}")
 
-def on_message(msg):
+def on_message(client, userdata, msg):
     global sensor_data
     payload = msg.payload.decode()
     with data_lock:
@@ -81,7 +79,6 @@ frame_count = 0
 def on_new_sample(appsink):
     global gst_frame, frame_count
     frame_count += 1
-    print(f"Received frame #{frame_count}")
 
     sample = appsink.pull_sample()
     if sample:
@@ -92,21 +89,21 @@ def on_new_sample(appsink):
         success, map_info = buf.map(Gst.MapFlags.READ)
         if success:
             try:
+                # Get the actual format from caps
                 structure = caps.get_structure(0)
                 width = structure.get_int('width')[1]
                 height = structure.get_int('height')[1]
 
-                print(f"Frame size: {width}x{height}, buffer size: {len(map_info.data)}")
-
+                # Calculate expected size for RGB
                 expected_size = width * height * 3
                 if len(map_info.data) >= expected_size:
+                    # Create numpy array with proper stride handling
                     frame_data = np.frombuffer(map_info.data[:expected_size], dtype=np.uint8)
                     frame_data = frame_data.reshape((height, width, 3))
 
                     with gst_frame_lock:
-                        # Convert to Pygame surface
+                        # Convert to Pygame surface (swap axes for width/height)
                         gst_frame = pygame.surfarray.make_surface(frame_data.swapaxes(0, 1))
-                        print(f"Created Pygame surface: {gst_frame.get_size()}")
                 else:
                     print(f"Buffer size mismatch: got {len(map_info.data)}, expected {expected_size}")
 
@@ -131,11 +128,10 @@ gst_pipeline_str = (
     f"avdec_h264 ! videoconvert ! video/x-raw,format=RGB,width={VIDEO_WIDTH},height={VIDEO_HEIGHT} ! "
     f"appsink name=mysink emit-signals=true max-buffers=1 drop=true sync=false"
 )
-
-print(f"GStreamer pipeline: {gst_pipeline_str}")
 pipeline = Gst.parse_launch(gst_pipeline_str)
 
 appsink = pipeline.get_by_name('mysink')
+
 appsink.set_property('emit-signals', True)
 appsink.connect('new-sample', on_new_sample)
 
@@ -151,11 +147,6 @@ if __name__ == "__main__":
         print("ERROR: Failed to start GStreamer pipeline!")
         exit(1)
 
-    # Wait for pipeline to start and check state
-    time.sleep(2)
-    state_ret, state, pending = pipeline.get_state(Gst.CLOCK_TIME_NONE)
-    print(f"Pipeline state: {state}")
-
     running = True
     clock = pygame.time.Clock()
     frame_display_count = 0
@@ -164,7 +155,6 @@ if __name__ == "__main__":
         while running:
             screen.fill((0, 0, 0))
 
-            # Handle video frame
             current_frame = None
             with gst_frame_lock:
                 if gst_frame:
@@ -174,17 +164,15 @@ if __name__ == "__main__":
                 frame_display_count += 1
                 screen.blit(current_frame, (0, 0))
             else:
-                # Show "No Video" message
                 no_video_text = font.render("No Video Signal", True, (255, 255, 255))
                 text_rect = no_video_text.get_rect(center=(VIDEO_WIDTH//2, VIDEO_HEIGHT//2))
                 screen.blit(no_video_text, text_rect)
 
-            # Overlay sensor data
             with data_lock:
                 temp_text = font.render(f"Temp: {sensor_data['temperature']} C", True, (255, 255, 0))
                 hum_text = font.render(f"Hum: {sensor_data['humidity']} %", True, (0, 255, 255))
-                photo_text = font.render(f"Photo: {sensor_data['photo']} lm", True, (255, 255, 255))  # Fixed label
-                dist_text = font.render(f"Dist: {sensor_data['distance']} cm", True, (255, 0, 255))
+                photo_text = font.render(f"Photo: {sensor_data['photo']} lm", True, (255, 255, 255))
+                dist_text = font.render(f"Dist: {sensor_data['distance']} mm", True, (255, 0, 255))
 
             screen.blit(temp_text, (5, 5))
             screen.blit(hum_text, (5, 35))
