@@ -24,7 +24,7 @@ def on_publish(client, userdata, mid):
 
 
 # MQTT broker details
-broker_address = "192.168.230.33"
+broker_address = "192.168.176.33"
 broker_port = 1883
 base_topic = "joystick"
 
