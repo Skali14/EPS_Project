@@ -15,8 +15,15 @@
 6. Install the necessary packages, using `pip3 install requirements.txt`
 
 ### MQTT Setup
-
-TODO
+- Run these commands
+  - sudo apt upgrade && sudo apt dist-upgrade
+  - sudo apt install mosquitto
+  - sudo systemctl enable mosquitto.service
+  - sudo mosquitto -d
+  - sudo nano /etc/mosquitto/conf.d/listener.conf
+    - add these lines
+    - listener 1883
+    - allow_anonymous true
 
 ### Display Setup
 
@@ -32,12 +39,11 @@ TODO
 
 ### Arduino Nano Setup for Controller Pi
 
--  TODO
+Use IDE such as Arduino IDE to upload/compile the file ./SensorArduinoNano/arduino_nano_code.ino
 
 ### Arduino Uno Setup for Motor Pi
 
--  TODO
-
+Use IDE such as Arduino IDE to upload/compile the file ./SensorArduinoUno/arduino_uno_code.ino
 
 ## Usage
 
@@ -60,9 +66,9 @@ TODO
 
 1. Michael Pittlik - k12226442
 2. Simon Kadlec - k12222898
-3. Felix Wild -
+3. Felix Wild - k12216177
 4. Cornelius Engl - k12216183
-5. Felix Wöß -
+5. Felix Wöß - k12206357
 
 ## Sources
 

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9211c8ed-3ca0-4710-9ede-da5dbf36ba09" name="Changes" comment="" />
+    <list default="true" id="9211c8ed-3ca0-4710-9ede-da5dbf36ba09" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/ControllerPi/arduino nano/sketch_may30a.ino" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,6 +54,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fwroc\PycharmProjects\EPS_Project\scripts\SensorArduinoNano" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -66,6 +76,8 @@
       <updated>1748950904804</updated>
       <workItem from="1748950905914" duration="2348000" />
       <workItem from="1749039245431" duration="72000" />
+      <workItem from="1749039330510" duration="211000" />
+      <workItem from="1749658703460" duration="2778000" />
     </task>
     <servers />
   </component>
