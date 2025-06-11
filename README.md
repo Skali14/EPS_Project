@@ -30,21 +30,24 @@ TODO
 
 - TODO
 
+### Arduino Nano Setup for Controller Pi
+
+-  TODO
+
+### Arduino Uno Setup for Motor Pi
+
+-  TODO
+
+
 ## Usage
 
 ### Controller Pi
-
-- Connect and setup Arduino Nano
-  - TODO
 
 - Run the following scripts:
   - [`camera_receiver.py`](scripts/ControllerPi/camera_receiver.py)
   - [`mqtt_send_rpi2.py`](scripts/ControllerPi/mqtt_send_rpi2.py)
  
 ### Motor Pi
-
-- Connect and setup Arduino Uno
-  - TODO
 
 - Run the following scripts:
   - [`mqtt_send_rpi1.py`](scripts/MotorPi/mqtt_send_rpi1.py)
