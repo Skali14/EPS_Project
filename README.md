@@ -1,36 +1,69 @@
-# Foobar
+# Sensor Robot
 
-Foobar is a Python library for dealing with word pluralization.
+"Sensor Robot" is an embedded project utilizing 2 Raspberry Pi's, one Arduino Nano and one Arduino Uno to achieve surveilance capabilities.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+### General
 
-```bash
-pip install foobar
-```
+1. Install Python, using `sudo apt install python3`
+2. Install the package manager `pip`, using `sudo apt install python3-pip`
+
+3. Load the scripts from [here](scripts) onto the respective devices.
+4. Create a virtual environment on both Pi's, using `python -m venv sensor_robot_env`
+5. Activate the virtual environment on both Pi's, using `source sensor_robot_env/bin/activate`
+6. Install the necessary packages, using `pip3 install requirements.txt`
+
+### MQTT Setup
+
+TODO
+
+### Display Setup
+
+- Run the command `sudo -E sensor_robot_env PATH=$PATH python3 adafruit-pitft.py`
+  - Select configuration [1] for the display
+  - Select rotation depending on your assembled robot
+  - Select "No" for all following questions
+
+
+### GStreamer Setup
+
+- TODO
 
 ## Usage
 
-```python
-import foobar
+### Controller Pi
 
-# returns 'words'
-foobar.pluralize('word')
+- Connect and setup Arduino Nano
+  - TODO
 
-# returns 'geese'
-foobar.pluralize('goose')
+- Run the following scripts:
+  - [`camera_receiver.py`](scripts/ControllerPi/camera_receiver.py)
+  - [`mqtt_send_rpi2.py`](scripts/ControllerPi/mqtt_send_rpi2.py)
+ 
+### Motor Pi
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
+- Connect and setup Arduino Uno
+  - TODO
 
-## Contributing
+- Run the following scripts:
+  - [`mqtt_send_rpi1.py`](scripts/MotorPi/mqtt_send_rpi1.py)
+  - [`main_rpi1.py`](scripts/MotorPi/main_rpi1.py)
+  - [`camera_sender.py`](scripts/MotorPi/camera_sender.py)
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
+
+## Contributors
+
+1. Michael Pittlik - k12226442
+2. Simon Kadlec - k12222898
+3. Felix Wild -
+4. Cornelius Engl -
+5. Felix Wöß -
+
+## Sources
+
+[Adafruit Display Setup Script](https://github.com/adafruit/Raspberry-Pi-Installer-Scripts/blob/main/adafruit-pitft.py)
 
 ## License
 
