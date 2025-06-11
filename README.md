@@ -39,11 +39,11 @@
 
 ### Arduino Nano Setup for Controller Pi
 
-Use IDE such as Arduino IDE to upload/compile the [file](scripts/SensorArduinoNano/arduino_nano_code.ino)
+Use IDE such as Arduino IDE to upload/compile [arduino_nano_code.ino](scripts/SensorArduinoNano/arduino_nano_code.ino)
 
 ### Arduino Uno Setup for Motor Pi
 
-Use IDE such as Arduino IDE to upload/compile the [file](scripts/SensorArduinoUno/arduino_uno_code.ino)
+Use IDE such as Arduino IDE to upload/compile [arduino_uno_code.ino](scripts/SensorArduinoUno/arduino_uno_code.ino)
 
 ## Usage
 
