@@ -1,0 +1,5 @@
+# Necessary requirements for Motor Pi
+
+RPi.GPIO
+pyserial
+paho-mqtt
