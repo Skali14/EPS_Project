@@ -70,7 +70,7 @@ Use IDE such as Arduino IDE to upload/compile the file ./SensorArduinoUno/arduin
 4. Cornelius Engl - k12216183
 5. Felix Wöß - k12206357
 
-## Sources
+## Acknowledgements
 
 [Adafruit Display Setup Script](https://github.com/adafruit/Raspberry-Pi-Installer-Scripts/blob/main/adafruit-pitft.py)
 
