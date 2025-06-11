@@ -21,8 +21,8 @@
   - `sudo systemctl enable mosquitto.service`
   - `sudo mosquitto -d`
   - add these lines to `sudo nano /etc/mosquitto/conf.d/listener.conf`
-    - listener 1883
-    - allow_anonymous true
+    - `listener 1883`
+    - `allow_anonymous true`
 
 ### Display Setup
 
