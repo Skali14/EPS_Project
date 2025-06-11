@@ -1,0 +1,8 @@
+# Necessary requirements for Controller Pi
+
+adafruit-python-shell
+click
+pygame
+paho-mqtt
+numpy
+pyserial
