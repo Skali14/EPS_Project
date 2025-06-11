@@ -28,7 +28,7 @@ TODO
 
 ### GStreamer Setup
 
-- TODO
+- Install Gi for GStreamer, using `sudo apt-get install python3-gi gir1.2-gst-1.0 gir1.2-gst-app-1.0 gir1.2-glib-2.0`
 
 ### Arduino Nano Setup for Controller Pi
 
